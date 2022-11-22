@@ -45,9 +45,7 @@ import com.hippo.ehviewer.client.EhCookieStore;
 import com.hippo.ehviewer.client.EhDns;
 import com.hippo.ehviewer.client.EhEngine;
 import com.hippo.ehviewer.client.EhRequestBuilder;
-import com.hippo.ehviewer.client.EhSSLSocketFactory;
 import com.hippo.ehviewer.client.EhUrl;
-import com.hippo.ehviewer.client.EhX509TrustManager;
 import com.hippo.ehviewer.client.data.GalleryDetail;
 import com.hippo.ehviewer.client.parser.EventPaneParser;
 import com.hippo.ehviewer.download.DownloadManager;
@@ -156,7 +154,7 @@ public class EhApplication extends SceneApplication {
     public static OkHttpClient getOkHttpClient(@NonNull Context context) {
         EhApplication application = ((EhApplication) context.getApplicationContext());
         if (application.mOkHttpClient == null) {
-            OkHttpClient.Builder builder = new OkHttpClient.Builder()
+            application.mOkHttpClient = new OkHttpClient.Builder()
                     .connectTimeout(5, TimeUnit.SECONDS)
                     .readTimeout(5, TimeUnit.SECONDS)
                     .writeTimeout(5, TimeUnit.SECONDS)
@@ -173,22 +171,8 @@ public class EhApplication extends SceneApplication {
                             throw new IOException(e.getMessage());
                         }
                     })
-                    .proxySelector(getEhProxySelector(application));
-            try {
-                TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(
-                        TrustManagerFactory.getDefaultAlgorithm());
-                trustManagerFactory.init((KeyStore) null);
-                TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
-                if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
-                    throw new IllegalStateException("Unexpected default trust managers:" + Arrays.toString(trustManagers));
-                }
-                X509TrustManager trustManager = (X509TrustManager) trustManagers[0];
-                builder.sslSocketFactory(new EhSSLSocketFactory(), trustManager);
-            } catch (Exception e) {
-                e.printStackTrace();
-                builder.sslSocketFactory(new EhSSLSocketFactory(), new EhX509TrustManager());
-            }
-            application.mOkHttpClient = builder.build();
+                    .proxySelector(getEhProxySelector(application))
+                    .build();
         }
         return application.mOkHttpClient;
     }

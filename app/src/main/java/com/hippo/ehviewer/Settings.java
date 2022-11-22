@@ -163,8 +163,6 @@ public class Settings {
     private static final int DEFAULT_PROXY_PORT = -1;
     private static final String KEY_BUILT_IN_HOSTS = "built_in_hosts_2";
     private static final boolean DEFAULT_BUILT_IN_HOSTS = false;
-    private static final String KEY_DOMAIN_FRONTING = "domain_fronting";
-    private static final boolean DEFAULT_DOMAIN_FRONTING = false;
     private static final String KEY_APP_LINK_VERIFY_TIP = "app_link_verify_tip";
     private static final boolean DEFAULT_APP_LINK_VERIFY_TIP = false;
     /********************
@@ -263,13 +261,6 @@ public class Settings {
 
     private static void fixDefaultValue(Context context) {
         if ("CN".equals(Locale.getDefault().getCountry())) {
-            // Enable domain fronting if the country is CN
-            if (!sSettingsPre.contains(KEY_BUILT_IN_HOSTS)) {
-                putBuiltInHosts(true);
-            }
-            if (!sSettingsPre.contains(KEY_DOMAIN_FRONTING)) {
-                putDF(true);
-            }
             // Enable show tag translations if the country is CN
             if (!sSettingsPre.contains(KEY_SHOW_TAG_TRANSLATIONS)) {
                 putShowTagTranslations(true);
@@ -741,14 +732,6 @@ public class Settings {
 
     public static void putBuiltInHosts(boolean value) {
         putBoolean(KEY_BUILT_IN_HOSTS, value);
-    }
-
-    public static boolean getDF() {
-        return getBoolean(KEY_DOMAIN_FRONTING, DEFAULT_DOMAIN_FRONTING);
-    }
-
-    public static void putDF(boolean value) {
-        putBoolean(KEY_DOMAIN_FRONTING, value);
     }
 
     public static boolean getAppLinkVerifyTip() {

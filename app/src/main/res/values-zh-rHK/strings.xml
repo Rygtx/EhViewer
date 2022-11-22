@@ -514,8 +514,6 @@
     <string name="settings_advanced_built_in_hosts_summary">應用提供的主機到IP的映射\n可被自定義 hosts.txt 覆蓋</string>
     <string name="settings_advanced_custom_hosts_title">自定義 hosts.txt</string>
     <string name="settings_advanced_custom_hosts_summary">將主機名稱映射到相應的IP地址\n可覆蓋內置 hosts.txt</string>
-    <string name="settings_advanced_domain_fronting_title">域名前置</string>
-    <string name="settings_advanced_domain_fronting_summary">繞過 SNI 封鎖</string>
     <string name="settings_privacy_pattern_protection_title">圖案保護</string>
     <string name="settings_privacy_pattern_protection_not_set">未設置圖案保護</string>
     <string name="settings_privacy_pattern_protection_set">已設置圖案保護</string>
